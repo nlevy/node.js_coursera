@@ -1,9 +1,9 @@
 var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var dishRouter = require('./dishRouter.js');
-var promoRouter = require('./promoRouter.js');
-var leaderRouter = require('./leaderRouter.js');
+var dishRouter = require('./routes/dishRouter.js');
+var promoRouter = require('./routes/promoRouter.js');
+var leaderRouter = require('./routes/leaderRouter.js');
 
 var hostname = 'localhost';
 var port = 3000;
