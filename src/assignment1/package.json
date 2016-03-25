@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js"
   },
-  "author": "",
+  "author": "Nir Levy",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
