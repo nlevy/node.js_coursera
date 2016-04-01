@@ -5,9 +5,18 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
 var config = require('./config');
+var users = require('./routes/users');
+var dishRouter = require('./routes/dishRouter');
 
+// app initialization
+var app = express();
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// mongo connection
 mongoose.connect(config.mongoUrl);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -15,16 +24,6 @@ db.once('open', function () {
     // we're connected!
     console.log("Connected correctly to server");
 });
-
-var users = require('./routes/users');
-var dishRouter = require('./routes/dishRouter');
-
-var app = express();
-
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 
 // passport config
 var User = require('./models/user');
@@ -43,11 +42,10 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-// development error handler
-// will print stacktrace
+// development error handler will print stacktrace
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    console.log("Im here")
     res.status(err.status || 500);
     res.json({
       message: err.message,
@@ -56,8 +54,7 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+// production error handler no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.json({
