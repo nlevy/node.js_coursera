@@ -9,13 +9,13 @@ dishRouter.use(bodyParser.json());
 
 dishRouter.route('/')
     .get(Verify.verifyOrdinaryUser, getDishes)
-    .post(Verify.verifyOrdinaryUser, createDish)
-    .delete(Verify.verifyOrdinaryUser, deleteDishes);
+    .post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, createDish)
+    .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, deleteDishes);
 
 dishRouter.route('/:dishId')
-    .get(getDish)
-    .put(updateDish)
-    .delete(deleteDish);
+    .get(Verify.verifyOrdinaryUser, getDish)
+    .put(Verify.verifyOrdinaryUser, Verify.verifyAdmin, updateDish)
+    .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, deleteDish);
 
 function getDishes(req, res, next) {
     Dishes.find({}, function (err, dish) {

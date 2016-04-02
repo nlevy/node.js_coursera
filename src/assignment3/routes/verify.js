@@ -34,3 +34,13 @@ exports.verifyOrdinaryUser = function (req, res, next) {
         return next(err);
     }
 };
+
+exports.verifyAdmin = function (req, res, next) {
+    if (req.decoded && req.decoded._doc && req.decoded._doc.admin) {
+        next();
+    } else {
+        var err = new Error('Only admin can perform this operation');
+        err.status = 403;
+        next(err);
+    }
+}
